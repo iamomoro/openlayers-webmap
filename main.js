@@ -20,15 +20,17 @@ function init() {
   //   map.on('click', function(e){
   //     console.log(e.coordinate);
   //   })
+
+  // base maps layers
   const openStreetMapStandard = new ol.layer.Tile({
     source: new ol.source.OSM(),
-    visible: false,
+    visible: true,
     title: 'OSMStandard',
   });
 
   const openStreetMapHumanitarian = new ol.layer.Tile({
     source: new ol.source.OSM({
-      url: 'https://{a-c}.title.openstreet.fr/hot/{z}/{x}/{y}.png',
+      url: 'https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     }),
     visible: false,
     title: "OSMHumanitarian",
@@ -38,8 +40,15 @@ function init() {
     source: new ol.source.XYZ({
       url: 'https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg',
     }),
-    visible: true,
+    visible: false,
     title: 'StamenTerrian',
+  });
+
+  //Layer Group
+  const baseLayerGroup = new ol.layer.Group({
+      layers: [
+          openStreetMapStandard, openStreetMapHumanitarian, StamenTerrian
+      ]
   })
-  map.addLayer(StamenTerrian);
+  map.addLayer(baseLayerGroup)
 }
