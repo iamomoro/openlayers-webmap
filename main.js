@@ -33,7 +33,7 @@ function init() {
       url: 'https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     }),
     visible: false,
-    title: "OSMHumanitarian",
+    title: 'OSMHumanitarian',
   });
 
   const StamenTerrian = new ol.layer.Tile({
@@ -46,9 +46,21 @@ function init() {
 
   //Layer Group
   const baseLayerGroup = new ol.layer.Group({
-      layers: [
-          openStreetMapStandard, openStreetMapHumanitarian, StamenTerrian
-      ]
-  })
-  map.addLayer(baseLayerGroup)
+    layers: [openStreetMapStandard, openStreetMapHumanitarian, StamenTerrian],
+  });
+  map.addLayer(baseLayerGroup);
+
+  //Layer Switcher Logic for Basemaps
+  const baseLayerElements = document.querySelectorAll(
+    '.sidebar > input[type=radio]'
+  );
+  for (let baseLayerElement of baseLayerElements) {
+    baseLayerElement.addEventListener('change', function () {
+      let baseLayerElementValue = this.value;
+      baseLayerGroup.getLayers().forEach(function (element, index, array) {
+        let baseLayerTitle = element.get('title');
+        element.setVisible(baseLayerTitle === baseLayerElementValue);
+      });
+    });
+  }
 }
