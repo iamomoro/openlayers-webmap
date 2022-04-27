@@ -1,10 +1,10 @@
 window.onload = init;
 
 var mapview = new ol.View({
-  center: [36.823102996344026,-1.2884355721062337],
-  zoom: 11,
-  projection: 'EPSG:4326',   
-})
+  center: [36.823102996344026, -1.2884355721062337],
+  zoom: 12,
+  projection: 'EPSG:4326',
+});
 
 function init() {
   const map = new ol.Map({
@@ -18,8 +18,8 @@ function init() {
   });
 
   map.on('click', function (e) {
-    alert(e.coordinate,mapview.getZoom());
-    });
+    alert(e.coordinate, mapview.getZoom());
+  });
 
   // base maps layers
   const openStreetMapStandard = new ol.layer.Tile({
